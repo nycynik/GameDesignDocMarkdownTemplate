@@ -4,7 +4,7 @@ import json
 import os.path
 
 
-def get_data(data):
+def edit_and_make_game_doc(data, template, save_file, destination):
 
     sg.theme('dark grey 9')
 
@@ -78,20 +78,22 @@ def get_data(data):
                              sg.Tab('Art-Music', tab4_art_music),
                              sg.Tab('Technical Description', tab5_technical),
                              sg.Tab('Marketing & Funding', tab6_marketing)]],
-                           key='-group2-', title_color='white',
-                           selected_title_color='yellow', tab_location='left')],
+                           title_color='white',
+                           selected_title_color='yellow',
+                           tab_location='left')],
               [sg.Button('Save')]]
 
-    window = sg.Window('My window with tabs', layout,
+    window = sg.Window('Game Design Document Creator', layout,
                        default_element_size=(12, 1))
 
     is_dirty = True
     while True:
         event, values = window.read()
-        sg.popup_non_blocking(event, values)
         if event == 'Save':
             is_dirty = False
-            make_gd(values)
+            make_gd(values, template, destination)
+            save_json(values, save_file)
+            sg.popup_non_blocking("Saved", f"Saved to file {save_file}")
 
         if event == sg.WIN_CLOSED:           # always,  always give a way out!
             # TODO: Implement a real dirty flag that updates when values are changed above.
@@ -100,15 +102,35 @@ def get_data(data):
     window.close()
 
 
-def make_gd(data):
-    print(data)
+def save_json(values, save_file):
+    with open(save_file, 'w') as json_save_file:
+        json_save_file.write(json.dumps(values))
+    json_save_file.close()
+
+
+def make_gd(data, template, destination):
+
+    output = template
+
+    print('data\n', data.keys())
+    for d in data.keys():
+        print(d, ' a ', f'{{{{{d}}}}}')
+
+        output = output.replace(f'{{{{{d}}}}}', data.get(d))
+
+    with open(destination, 'w') as dest:
+        dest.write(output)
+    dest.close()
+
+    return True
 
 
 def load_gdd_values(file_path):
     """Loads the existing gdd values from a json file if they exist"""
 
-    with open(file_path, 'r') as myfile:
-        data = myfile.read()
+    with open(file_path, 'r') as gdd_source_file:
+        data = gdd_source_file.read()
+    gdd_source_file.close()
 
     # parse file
     obj = json.loads(data)
@@ -126,28 +148,44 @@ def main():
     TODO: Make sure that before it saves, it makes a backup of the previous file. """
 
     data = None
+    save_file = 'gameDoc.json'
 
     # read the command line args.
     parser = argparse.ArgumentParser(
         description='Generate a Game Development Doc (GDD).')
-    parser.add_argument('-i', '--input', default='gameDoc.json',
+    parser.add_argument('-i', '--input', default='gameDocDefault.json',
                         help='the input file')
+    parser.add_argument('-t', '--template', default='design_doc_template.md',
+                        help='the markdown content that was created')
     parser.add_argument('-o', '--output', default='gameDoc.md',
                         help='the markdown content that was created')
 
     args = parser.parse_args()
 
     # == verify args ==
-    # nothing to verify.
+    template = '# {{name}} Design Doc\n'
+
+    if not os.path.isfile(args.template):
+        print(
+            'Template file is missing or unreadable. Default Template will be used instead.')
+    else:
+        with open(args.template, 'r') as template_file:
+            template = template_file.read()
+        template_file.close()
 
     # load existing values
-    if os.path.isfile(args.input):
-        print("Loading Values")
-        data = load_gdd_values(args.input)
+    if os.path.isfile(save_file):
+        print("Loading Saved Values")
+        data = load_gdd_values(save_file)
     else:
-        print("No existing settings to load.")
+        if os.path.isfile(args.input):
+            print("Loading Values")
+            data = load_gdd_values(args.input)
+        else:
+            print("No existing settings to load.")
+            data = {}
 
-    data = get_data(data)
+    edit_and_make_game_doc(data, template, save_file, args.output)
 
 
 if __name__ == "__main__":
