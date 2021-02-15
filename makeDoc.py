@@ -7,10 +7,11 @@ import os.path
 def edit_and_make_game_doc(data, template, save_file, destination):
 
     sg.theme('dark grey 9')
+    gdd_status = "Ready"
 
     # Define the window's contents
     tab1_layout = [[sg.Text("What's your game name?")],  # Part 2 - The Layout
-                   [sg.Input(data.get('name'), key='name')],
+                   [sg.Input(data.get('name'), key='name', enable_events=True)],
                    [sg.Text("Project Description?")],
                    [sg.Multiline(data.get('description'), key='description', size=(60, 20))]]
 
@@ -69,6 +70,7 @@ def edit_and_make_game_doc(data, template, save_file, destination):
                       [sg.Text('Localization')],
                       [sg.Multiline(data.get('localization'), key='localization', size=(60, 7))]]
 
+    # main layout of window
     layout = [[sg.TabGroup([[sg.Tab('Project', tab1_layout, key='-mykey-'),
                              sg.Tab('Story', tab2_characters),
                              sg.Tab('Story Progression',
@@ -81,8 +83,10 @@ def edit_and_make_game_doc(data, template, save_file, destination):
                            title_color='white',
                            selected_title_color='yellow',
                            tab_location='left')],
-              [sg.Button('Save')]]
+              [sg.Button('Save')]
+              ]
 
+    # create window
     window = sg.Window('Game Design Document Creator', layout,
                        default_element_size=(12, 1))
 
@@ -93,11 +97,15 @@ def edit_and_make_game_doc(data, template, save_file, destination):
             is_dirty = False
             make_gd(values, template, destination)
             save_json(values, save_file)
-            sg.popup_non_blocking("Saved", f"Saved to file {save_file}")
+            sg.popup_non_blocking(f"Saved to file {destination}")
+            gdd_status = f"Saved to file {save_file}"
 
         if event == sg.WIN_CLOSED:           # always,  always give a way out!
             # TODO: Implement a real dirty flag that updates when values are changed above.
+            # if not is_dirty:
             break
+
+        is_dirty = True
 
     window.close()
 
@@ -112,10 +120,7 @@ def make_gd(data, template, destination):
 
     output = template
 
-    print('data\n', data.keys())
     for d in data.keys():
-        print(d, ' a ', f'{{{{{d}}}}}')
-
         output = output.replace(f'{{{{{d}}}}}', data.get(d))
 
     with open(destination, 'w') as dest:

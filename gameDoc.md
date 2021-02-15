@@ -7,7 +7,15 @@
 
 # Project Description
 
-A summary of what this game is about, without going into much detail about game mechanics or anything else. After reading the Project Description, it should be clear what type of game you are trying to make (Social, Casual, Hardcore, etc.) and the genre (Puzzle, RPG, FPS, etc.). Of course, you can add more information that feels relevant to your game. This section would ideally be one or two paragraphs long. No more than a page for sure.
+A summary of what this game is about, without going into much detail about game mechanics or anything else. After reading the Project Description, it should be clear what type of game you are trying to make (Social, Casual, Hardcore, etc.) and the genre (Puzzle, RPG, FPS, etc.). Of course, you can add more information that feels relevant to your game. This section would ideally be one or two paragraphs long. No more than a page for sure. 
+
+
+
+
+
+
+
+
 
 
 
@@ -18,9 +26,25 @@ A summary of what this game is about, without going into much detail about game 
 
 
 
+
+
+
+
+
+
+
+
 # 2. Story
 
-What hapens to the characters
+What hapens to the characters.
+
+
+
+
+
+
+
+
 
 
 
@@ -30,9 +54,25 @@ What hapens to the characters
 
 
 
+
+
+
+
+
+
+
+
 # 3. Story Progression
 
 “The world of your game is a thing that exists apart. Your game is a doorway to this magic place that exists only in the imagination of your players”  Jesse Schell, Book of Lenses
+
+
+
+
+
+
+
+
 
 
 
@@ -44,7 +84,22 @@ What hapens to the characters
 
 
 
+
+
+
+
+
+
+
+
 ## 4.2. User Skills
+
+What can the characters do?
+
+
+
+
+
 
 
 
@@ -55,7 +110,23 @@ What hapens to the characters
 
 
 
+
+
+
+
+
+
+
+
 ## 4.4. Items and power-ups
+
+
+
+
+
+
+
+
 
 
 
@@ -67,7 +138,23 @@ What hapens to the characters
 
 
 
+
+
+
+
+
+
+
+
 ## 4.6 Losing
+
+
+
+
+
+
+
+
 
 
 
@@ -79,9 +166,25 @@ What hapens to the characters
 
 
 
+
+
+
+
+
+
+
+
 # 6. Music and Sounds
 
 “Music is the language of the soul, and as such, it speaks to players on a deep level.”  Jesse Schell, Book of Lenses
+
+
+
+
+
+
+
+
 
 
 
@@ -96,7 +199,23 @@ What hapens to the characters
 
 
 
+
+
+
+
+
+
+
+
 # 8.1. Demographics
+
+
+
+
+
+
+
+
 
 
 
@@ -108,7 +227,23 @@ What hapens to the characters
 
 
 
+
+
+
+
+
+
+
+
 # 8.3. Localization
+
+
+
+
+
+
+
+
 
 
 
