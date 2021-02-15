@@ -1,5 +1,5 @@
 # GameDesignDocMarkdownTemplate
-A game design document markdown template
+A game design document markdown generator
 
 ## Thanks Gamasutra!
 
@@ -8,7 +8,25 @@ This is based on [How to Write a Game Design Document](https://www.gamasutra.com
 
 ## To use
 
-You can clone this repo, or just download the template doc folder and add it to your game repo. Then edit the game design doc, and away you go!
+Download the project, it requires Python 3.  
+
+### Install Requirements
+
+pip install
+
+### Run the generator
+
+python makeDoc.py
+
+### Modify final output
+
+You will find the output file generated as `gameDoc.md`
 
 Good luck!
+
+
+### Notes
+
+I mostly made this to play with [PySimpleGUI](https://github.com/PySimpleGUI/PySimpleGUI), but it seems like it would be usable!
+
 
