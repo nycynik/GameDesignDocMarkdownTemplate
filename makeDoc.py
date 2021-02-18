@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+import markdown
 import argparse
 import json
 import os.path
@@ -101,7 +102,7 @@ def edit_and_make_game_doc(data, template, save_file, destination):
             gdd_status = f"Saved to file {save_file}"
 
         if event == sg.WIN_CLOSED:           # always,  always give a way out!
-            # TODO: Implement a real dirty flag that updates when values are changed above.
+            # TODO: dirty flag is now implemented, but not able to not save.
             # if not is_dirty:
             break
 
@@ -126,6 +127,12 @@ def make_gd(data, template, destination):
     with open(destination, 'w') as dest:
         dest.write(output)
     dest.close()
+
+    # adding HTML version
+    html_output = md.markdown(output)
+
+    with open(destination + '.html', 'w') as dest_html:
+        dest_html.write(html_output)
 
     return True
 
