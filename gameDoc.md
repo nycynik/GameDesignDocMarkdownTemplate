@@ -19,9 +19,11 @@ A summary of what this game is about, without going into much detail about game 
 
 
 
+
 # 1. Characters
 
 “An important part of the art of storytelling is to create characters that the guests can empathize with easily, for the more the guests can empathize with the characters, the more interesting the events become that happen to those characters.”  Jesse Schell, Book of Lenses
+
 
 
 
@@ -48,6 +50,7 @@ What hapens to the characters.
 
 
 
+
 ## 2.1. Theme
 
 “Resonant themes elevate your work from craft to art. An artist is someone who takes you where you could never go alone, and theme is the vehicle for getting there.” - Jesse Schell, Book of Lenses
@@ -62,9 +65,11 @@ What hapens to the characters.
 
 
 
+
 # 3. Story Progression
 
 “The world of your game is a thing that exists apart. Your game is a doorway to this magic place that exists only in the imagination of your players”  Jesse Schell, Book of Lenses
+
 
 
 
@@ -92,9 +97,11 @@ What hapens to the characters.
 
 
 
+
 ## 4.2. User Skills
 
 What can the characters do?
+
 
 
 
@@ -118,7 +125,9 @@ What can the characters do?
 
 
 
+
 ## 4.4. Items and power-ups
+
 
 
 
@@ -146,7 +155,9 @@ What can the characters do?
 
 
 
+
 ## 4.6 Losing
+
 
 
 
@@ -174,9 +185,11 @@ What can the characters do?
 
 
 
+
 # 6. Music and Sounds
 
 “Music is the language of the soul, and as such, it speaks to players on a deep level.”  Jesse Schell, Book of Lenses
+
 
 
 
@@ -207,7 +220,9 @@ What can the characters do?
 
 
 
+
 # 8.1. Demographics
+
 
 
 
@@ -235,7 +250,9 @@ What can the characters do?
 
 
 
+
 # 8.3. Localization
+
 
 
 

@@ -13,7 +13,8 @@ def edit_and_make_game_doc(data, template, save_file, destination):
     # Define the window's contents
     tab1_layout = [[sg.Text("What's your game name?")],  # Part 2 - The Layout
                    [sg.Input(data.get('name'), key='name', enable_events=True)],
-                   [[sg.Text("Choose an image: "), sg.Input(key="-IN2-"), sg.FileBrowse(key='logo')]],
+                   [sg.Text("Choose an image: "), sg.Input(
+                       key="fileKey"), sg.FileBrowse(key='logo')],
                    [sg.Text("Project Description?")],
                    [sg.Multiline(data.get('description'), key='description', size=(60, 20))]]
 
