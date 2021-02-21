@@ -14,11 +14,11 @@ Download the project, it requires Python 3.
 
 ### Install Requirements
 
-pip install
+    pip install -r requirements.txt
 
 ### Run the generator
 
-python makeDoc.py
+    python makeDoc.py
 
 ### Modify final output
 
