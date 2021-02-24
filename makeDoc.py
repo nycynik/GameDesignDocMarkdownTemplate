@@ -3,6 +3,7 @@ import markdown as md
 import argparse
 import json
 import os.path
+from shutil import copyfile
 
 
 def edit_and_make_game_doc(data, template, save_file, destination_folder):
@@ -125,8 +126,11 @@ def make_gd(data, template, destination_folder):
 
     for d in data.keys():
         if d == 'logoPath':
-            
-            output = output.replace(f'{{{{{d}}}}}', data.get(d))
+            file_name = os.path.basename(data.get(d))
+            copyfile(data.get(d), os.path.join(
+                
+                destination_folder, file_name))
+            output = output.replace(f'{{{{{d}}}}}', file_name)
         else:
             output = output.replace(f'{{{{{d}}}}}', data.get(d))
 
