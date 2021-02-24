@@ -1,11 +1,11 @@
 import PySimpleGUI as sg
-import markdown
+import markdown as md
 import argparse
 import json
 import os.path
 
 
-def edit_and_make_game_doc(data, template, save_file, destination):
+def edit_and_make_game_doc(data, template, save_file, destination_folder):
 
     sg.theme('dark grey 9')
     gdd_status = "Ready"
@@ -14,7 +14,7 @@ def edit_and_make_game_doc(data, template, save_file, destination):
     tab1_layout = [[sg.Text("What's your game name?")],  # Part 2 - The Layout
                    [sg.Input(data.get('name'), key='name', enable_events=True)],
                    [sg.Text("Choose an image: "), sg.Input(
-                       key="fileKey"), sg.FileBrowse(key='logo')],
+                       key="logoPath"), sg.FileBrowse(key='logo')],
                    [sg.Text("Project Description?")],
                    [sg.Multiline(data.get('description'), key='description', size=(60, 20))]]
 
@@ -98,9 +98,9 @@ def edit_and_make_game_doc(data, template, save_file, destination):
         event, values = window.read()
         if event == 'Save':
             is_dirty = False
-            make_gd(values, template, destination)
+            make_gd(values, template, destination_folder)
             save_json(values, save_file)
-            sg.popup_non_blocking(f"Saved to file {destination}")
+            sg.popup_non_blocking(f"Saved to {destination_folder}")
             gdd_status = f"Saved to file {save_file}"
 
         if event == sg.WIN_CLOSED:           # always,  always give a way out!
@@ -119,21 +119,25 @@ def save_json(values, save_file):
     json_save_file.close()
 
 
-def make_gd(data, template, destination):
+def make_gd(data, template, destination_folder):
 
     output = template
 
     for d in data.keys():
-        output = output.replace(f'{{{{{d}}}}}', data.get(d))
+        if d == 'logoPath':
+            
+            output = output.replace(f'{{{{{d}}}}}', data.get(d))
+        else:
+            output = output.replace(f'{{{{{d}}}}}', data.get(d))
 
-    with open(destination, 'w') as dest:
+    with open(os.path.join(destination_folder, 'gameDoc.md'), 'w') as dest:
         dest.write(output)
     dest.close()
 
     # adding HTML version
     html_output = md.markdown(output)
 
-    with open(destination + '.html', 'w') as dest_html:
+    with open(os.path.join(destination_folder, 'gameDoc.html'), 'w') as dest_html:
         dest_html.write(html_output)
 
     return True
@@ -171,8 +175,8 @@ def main():
                         help='the input file')
     parser.add_argument('-t', '--template', default='design_doc_template.md',
                         help='the markdown content that was created')
-    parser.add_argument('-o', '--output', default='gameDoc.md',
-                        help='the markdown content that was created')
+    parser.add_argument('-o', '--output', default='output',
+                        help='the folder to save the output too')
 
     args = parser.parse_args()
 
@@ -198,6 +202,9 @@ def main():
         else:
             print("No existing settings to load.")
             data = {}
+
+    if not os.path.isdir(args.output):
+        os.makedirs(args.output)
 
     edit_and_make_game_doc(data, template, save_file, args.output)
 
