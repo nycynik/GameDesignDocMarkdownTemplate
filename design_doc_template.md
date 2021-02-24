@@ -3,6 +3,8 @@
 
 *Revision: 1.0.0*
 
+![logo]({{logoPath}} "{{name}}")
+
 <div style="page-break-after: always"></div>
 
 # Project Description
