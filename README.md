@@ -22,7 +22,7 @@ Download the project, it requires Python 3.
 
 ### Modify final output
 
-You will find the output file generated as `gameDoc.md`
+You will find the output file generated in the output folder specified, or by default in the output folder.  Sample output is here [gameDoc.md](./output/gameDoc.md)
 
 Good luck!
 
