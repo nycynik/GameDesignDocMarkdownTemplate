@@ -12,28 +12,33 @@ def edit_and_make_game_doc(data, template, save_file, destination_folder):
     gdd_status = "Ready"
 
     # Define the window's contents
-    tab1_layout = [[sg.Text("What's your game name?")],  # Part 2 - The Layout
-                   [sg.Input(data.get('name'), key='name', enable_events=True)],
-                   [sg.Text("Choose an image: "), sg.Input(
-                       key="logoPath"), sg.FileBrowse(key='logo')],
-                   [sg.Text("Project Description?")],
-                   [sg.Multiline(data.get('description'), key='description', size=(60, 20))]]
+    # first tab
+    tab1_layout = [[sg.Text("What's your game's name?", font='Any 12', pad=((5, 10), (5, 5)))],  # Part 2 - The Layout
+                   [sg.Input(data.get('name'), key='name', enable_events=True,
+                             size=(40, 1), font='Any 12')],
+                   [sg.Text("Cover Image: ", font='Any 12'), sg.Input(
+                       key="logoPath", size=(20, 1), font='Any 12'), sg.FileBrowse(key='logo')],
+                   [sg.Text("Project Description:", font='Any 12')],
+                   [sg.Multiline(data.get('description'), key='description',
+                                 size=(60, 20), enable_events=True)]]
 
-    tab2_characters = [[sg.Text("Characters?")],
-                       [sg.Multiline(data.get('characters'),
-                                     key='characters', size=(60, 8))],
-                       [sg.Text("Story?")],
-                       [sg.Multiline(data.get('story'),
-                                     key='story', size=(60, 10))],
-                       [sg.Text("Theme?")],
-                       [sg.Multiline(data.get('theme'),
-                                     key='theme', size=(60, 10))]
+    # Tab 2
+    tab2_characters = [[sg.Text("Characters:")],
+                       [sg.Multiline(data.get('characters'), key='characters', size=(
+                           60, 8), enable_events=True)],
+                       [sg.Text("Story:")],
+                       [sg.Multiline(data.get('story'), key='story',
+                                     size=(60, 10), enable_events=True)],
+                       [sg.Text("Theme:")],
+                       [sg.Multiline(data.get('theme'), key='theme',
+                                     size=(60, 10), enable_events=True)]
                        ]
 
-    tab_gameplay1 = [[sg.Text('Goals')],
+    # tab 3
+    tab_gameplay1 = [[sg.Text('Goals:')],
                      [sg.Multiline(data.get('goals'),
                                    key='goals', size=(60, 10))],
-                     [sg.Text('User Skills')],
+                     [sg.Text('User Skills:')],
                      [sg.Multiline(data.get('skills'),
                                    key='skills', size=(60, 10))],
                      [sg.Text('Game Mechanics:')],
@@ -44,67 +49,99 @@ def edit_and_make_game_doc(data, template, save_file, destination_folder):
     tab_gameplay2 = [[sg.Text('Items and power-ups:')],
                      [sg.Multiline(data.get('items'),
                                    key='items', size=(60, 10))],
-                     [sg.Text('Progression and challenge')],
+                     [sg.Text('Progression and challenge:')],
                      [sg.Multiline(data.get('challenge'),
                                    key='challenge', size=(60, 12))],
                      [sg.Text('Losing:')],
                      [sg.Multiline(data.get('losing'), key='losing', size=(60, 5))]]
 
-    tab_story_progression = [[sg.Text("Story Progression?")],
-                             [sg.Multiline(data.get('progression'), key='progression', size=(60, 30))]]
+    progression_element = sg.Multiline(
+        data.get('progression'), key='progression', size=(60, 30), enable_events=True)
+    tab_story_progression = [[sg.Text("Story Progression:")],
+                             [progression_element]]
 
-    tab4_art_music = [[sg.Text('Art Style')],
+    tab4_art_music = [[sg.Text('Art Style:')],
                       [sg.Multiline(data.get('art'),
                                     key='art', size=(60, 15))],
-                      [sg.Text('Music and Sounds')],
+                      [sg.Text('Music and Sounds:')],
                       [sg.Multiline(data.get('music'), key='music', size=(60, 15))]]
 
-    tab5_technical = [[sg.Text('Technical Description')],
-                      [sg.Multiline(data.get('techical'), key='technical', size=(60, 25))]]
+    technical_description_element = sg.Multiline(
+        data.get('techical'), key='technical', size=(60, 25))
+    tab5_technical = [[sg.Text('Technical Description:')],
+                      [technical_description_element]]
 
-    tab6_marketing = [[sg.Text('General Plan')],
-                      [sg.Multiline(data.get('marketing'),
-                                    key='marketing', size=(60, 6))],
-                      [sg.Text('Demographics')],
+    general_plan_element = sg.Multiline(data.get('marketing'),
+                                        key='marketing', size=(60, 6))
+    tab6_marketing = [[sg.Text('General Plan:', tooltip='How do you plan to market your game?')],
+                      [general_plan_element],
+                      [sg.Text('Demographics:',
+                               tooltip='Who will you market your game to?')],
                       [sg.Multiline(data.get('demographics'),
                                     key='demographics', size=(60, 7))],
-                      [sg.Text('Platforms & Monetization')],
+                      [sg.Text('Platforms & Monetization:',
+                               tooltip='Where and how will you market your game?')],
                       [sg.Multiline(data.get('monetization'),
                                     key='monetization', size=(60, 7))],
-                      [sg.Text('Localization')],
+                      [sg.Text(
+                          'Localization:', tooltip='Will you enable localization, if so for whom?')],
                       [sg.Multiline(data.get('localization'), key='localization', size=(60, 7))]]
 
-    # main layout of window
-    layout = [[sg.TabGroup([[sg.Tab('Project', tab1_layout, key='-mykey-'),
+    tabGroup = sg.TabGroup([[sg.Tab('Project', tab1_layout, key='-mykey-'),
                              sg.Tab('Story', tab2_characters),
-                             sg.Tab('Story Progression',
+                             sg.Tab('Progression',
                                     tab_story_progression),
                              sg.Tab('Gameplay 1', tab_gameplay1),
                              sg.Tab('Gameplay 2', tab_gameplay2),
                              sg.Tab('Art-Music', tab4_art_music),
-                             sg.Tab('Technical Description', tab5_technical),
+                             sg.Tab('Technical', tab5_technical),
                              sg.Tab('Marketing & Funding', tab6_marketing)]],
                            title_color='white',
+                           font='Any 14',
+                           pad=(5, 5),
                            selected_title_color='yellow',
-                           tab_location='left')],
-              [sg.Button('Save')]
+                           tab_location='top')
+
+    # main layout of window
+    layout = [[tabGroup],
+              [sg.Button('Quit'), sg.Button('Save')]
               ]
 
     # create window
-    window = sg.Window('Game Design Document Creator', layout,
-                       default_element_size=(12, 1), resizable=True)
+    window = sg.Window('Game Design Document Creator',
+                       layout,
+                       default_element_size=(12, 1),
+                       resizable=True,
+                       finalize=True)
+    # window.bind('<Configure>', "Configure")
 
+    # support for resizing the elements.
+    tabGroup.expand(expand_x=True, expand_y=True)
+    tab1_layout[4][0].expand(expand_x=True, expand_y=True)
+    progression_element.expand(expand_x=True, expand_y=True)
+    technical_description_element.expand(expand_x=True, expand_y=True)
+    general_plan_element.expand(expand_x=True, expand_y=True)
+    tab2_characters[1][0].expand(expand_x=True, expand_y=True)
+    tab2_characters[3][0].expand(expand_x=True, expand_y=True)
+    tab2_characters[5][0].expand(expand_x=True, expand_y=True)
+    tab_gameplay1[1][0].expand(expand_x=True, expand_y=True)
+    tab_gameplay1[3][0].expand(expand_x=True, expand_y=True)
+    tab_gameplay1[5][0].expand(expand_x=True, expand_y=True)
+    tab_gameplay2[1][0].expand(expand_x=True, expand_y=True)
+    tab_gameplay2[3][0].expand(expand_x=True, expand_y=True)
+    tab_gameplay2[5][0].expand(expand_x=True, expand_y=True)
+    tab4_art_music[1][0].expand(expand_x=True, expand_y=True)
+    tab4_art_music[3][0].expand(expand_x=True, expand_y=True)
+    tab6_marketing[1][0].expand(expand_x=True, expand_y=True)
+    tab6_marketing[3][0].expand(expand_x=True, expand_y=True)
+    tab6_marketing[5][0].expand(expand_x=True, expand_y=True)
+    tab6_marketing[7][0].expand(expand_x=True, expand_y=True)
+
+    # main loop
     is_dirty = True
     while True:
         event, values = window.read()
         event_handled = False
-        if event == 'Save':
-            is_dirty = False
-            make_gd(values, template, destination_folder)
-            save_json(values, save_file)
-            sg.popup_non_blocking(f"Saved to {destination_folder}")
-            gdd_status = f"Saved to file {save_file}"
-            event_handled = True
 
         if event == sg.WIN_CLOSED:           # always,  always give a way out!
             # TODO: dirty flag is now implemented, but not able to not save.
@@ -112,10 +149,29 @@ def edit_and_make_game_doc(data, template, save_file, destination_folder):
             event_handled = True
             break
 
-        if event_handled == False:
-            print(event, values)
+        elif event == 'Quit':
+            if is_dirty:
+                should_close_anyway = sg.popup_ok_cancel(
+                    f"You have unsaved work, quit anyway?", modal=True)
+                if (should_close_anyway == 'OK'):
+                    break
+            else:
+                break
 
-        is_dirty = True
+        elif event == 'Save':
+            is_dirty = False
+            make_gd(values, template, destination_folder)
+            save_json(values, save_file)
+            sg.popup_notify(f"Saved to {save_file}")
+            gdd_status = f"Saved to file {save_file}"
+            event_handled = True
+
+        elif event == 'Configure':
+            w, h = window.size
+
+        if event_handled == False:
+            #     print(event)
+            is_dirty = True
 
     window.close()
 
@@ -131,16 +187,18 @@ def make_gd(data, template, destination_folder):
     output = template
 
     for d in data.keys():
-        if d == 'logoPath':
-            if (os.path.isfile(d)):
-                file_name = os.path.basename(data.get(d))
-                copyfile(data.get(d), os.path.join(
-                    destination_folder, file_name))
+        if data.get(d) is not None:
+            if d == 'logoPath':
+                logo_file = data.get(d)
+                if (os.path.isfile(logo_file)):
+                    file_name = os.path.basename(logo_file)
+                    copyfile(logo_file, os.path.join(
+                        destination_folder, file_name))
+                else:
+                    file_name = logo_file
+                output = output.replace(f'{{{{{d}}}}}', file_name)
             else:
-                file_name = data.get(d)
-            output = output.replace(f'{{{{{d}}}}}', file_name)
-        else:
-            output = output.replace(f'{{{{{d}}}}}', data.get(d))
+                output = output.replace(f'{{{{{d}}}}}', data.get(d).strip())
 
     with open(os.path.join(destination_folder, 'gameDoc.md'), 'w') as dest:
         dest.write(output)
