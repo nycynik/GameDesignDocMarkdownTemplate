@@ -92,22 +92,28 @@ def edit_and_make_game_doc(data, template, save_file, destination_folder):
 
     # create window
     window = sg.Window('Game Design Document Creator', layout,
-                       default_element_size=(12, 1))
+                       default_element_size=(12, 1), resizable=True)
 
     is_dirty = True
     while True:
         event, values = window.read()
+        event_handled = False
         if event == 'Save':
             is_dirty = False
             make_gd(values, template, destination_folder)
             save_json(values, save_file)
             sg.popup_non_blocking(f"Saved to {destination_folder}")
             gdd_status = f"Saved to file {save_file}"
+            event_handled = True
 
         if event == sg.WIN_CLOSED:           # always,  always give a way out!
             # TODO: dirty flag is now implemented, but not able to not save.
             # if not is_dirty:
+            event_handled = True
             break
+
+        if event_handled == False:
+            print(event, values)
 
         is_dirty = True
 
@@ -128,9 +134,10 @@ def make_gd(data, template, destination_folder):
         if d == 'logoPath':
             if (os.path.isfile(d)):
                 file_name = os.path.basename(data.get(d))
-                copyfile(data.get(d), os.path.join(destination_folder, file_name))
+                copyfile(data.get(d), os.path.join(
+                    destination_folder, file_name))
             else:
-                file_name = data.get(d)               
+                file_name = data.get(d)
             output = output.replace(f'{{{{{d}}}}}', file_name)
         else:
             output = output.replace(f'{{{{{d}}}}}', data.get(d))
@@ -202,7 +209,8 @@ def main():
         print(f"Loading Saved Values from {save_file}")
         data = load_gdd_values(save_file)
         if os.path.isfile(args.input):
-            print(f'WARNING! Save file will overwrite defaults specified on command line!')
+            print(
+                f'WARNING! Save file will overwrite defaults specified on command line!')
     else:
         if os.path.isfile(args.input):
             print("Loading Values")
