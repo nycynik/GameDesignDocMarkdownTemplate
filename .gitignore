@@ -1,2 +1,9 @@
 gdd
 
+build/
+__pycache__
+
+makeDoc.spec
+
+
+

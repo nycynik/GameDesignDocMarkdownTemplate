@@ -126,10 +126,11 @@ def make_gd(data, template, destination_folder):
 
     for d in data.keys():
         if d == 'logoPath':
-            file_name = os.path.basename(data.get(d))
-            copyfile(data.get(d), os.path.join(
-                
-                destination_folder, file_name))
+            if (os.path.isfile(d)):
+                file_name = os.path.basename(data.get(d))
+                copyfile(data.get(d), os.path.join(destination_folder, file_name))
+            else:
+                file_name = data.get(d)               
             output = output.replace(f'{{{{{d}}}}}', file_name)
         else:
             output = output.replace(f'{{{{{d}}}}}', data.get(d))
@@ -190,6 +191,7 @@ def main():
     if not os.path.isfile(args.template):
         print(
             'Template file is missing or unreadable. Default Template will be used instead.')
+        print(f'Template file: {args.template}')
     else:
         with open(args.template, 'r') as template_file:
             template = template_file.read()
@@ -197,8 +199,10 @@ def main():
 
     # load existing values
     if os.path.isfile(save_file):
-        print("Loading Saved Values")
+        print(f"Loading Saved Values from {save_file}")
         data = load_gdd_values(save_file)
+        if os.path.isfile(args.input):
+            print(f'WARNING! Save file will overwrite defaults specified on command line!')
     else:
         if os.path.isfile(args.input):
             print("Loading Values")
