@@ -7,3 +7,7 @@ makeDoc.spec
 
 
 
+.vscode
+.intellij
+.DS_Store
+
