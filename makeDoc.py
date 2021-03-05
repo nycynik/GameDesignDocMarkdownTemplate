@@ -20,7 +20,7 @@ def edit_and_make_game_doc(data, template, save_file, destination_folder):
                        key="logoPath", size=(20, 1), font='Any 12'), sg.FileBrowse(key='logo')],
                    [sg.Text("Project Description:", font='Any 12')],
                    [sg.Multiline(data.get('description'), key='description',
-                                 size=(60, 20), enable_events=True)]]
+                                 size=(60, 20), enable_events=True, font='Any 12')]]
 
     # Tab 2
     tab2_characters = [[sg.Text("Characters:")],
